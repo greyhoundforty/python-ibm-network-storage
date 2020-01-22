@@ -21,6 +21,11 @@ object_filter = {
             'keyName': {
                 'operation': '*= BLOCK_STORAGE'
                 }
+            },
+        'storageType': {
+            'keyName': {
+                'operation': '!~ BLOCK_STORAGE_REPLICANT'
+                }
             }
         }
     }

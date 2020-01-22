@@ -1,41 +1,41 @@
 """
 @author Ryan Tiffany
-Using Classes for File Volume Ids
+Using Classes for Block Volume Ids
 """
 import SoftLayer
 from pprint import pprint as pp
 
-class fileVolumeIds():
+class blockVolumeIds():
     def __init__(self):
         self.client = SoftLayer.create_client_from_env()
         debugger = SoftLayer.DebugTransport(self.client.transport)
         self.client.transport = debugger
         
     def main(self):
-        object_mask = "mask[id,billingItem[id]]"
+        object_mask = "mask[id]"
         object_filter = {
-            'nasNetworkStorage': {
+            'iscsiNetworkStorage': {
                 'serviceResource': {
                     'type': {
                         'type': {
-                            'operation': '!~ NAS'
+                            'operation': '!~ ISCSI'
                             }
                         }
                     },
                 'storageType': {
                     'keyName': {
-                        'operation': '*= FILE_STORAGE'
+                        'operation': '*= BLOCK_STORAGE'
                         }
                     },
                 'storageType': {
                     'keyName': {
-                        'operation': '!~ FILE_STORAGE_REPLICANT'
+                        'operation': '!~ BLOCK_STORAGE_REPLICANT'
                         }
                     }
                 }
             }
 
-        result = self.client('SoftLayer_Account', 'getNasNetworkStorage',
+        result = self.client('SoftLayer_Account', 'getIscsiNetworkStorage',
                     mask=object_mask, filter=object_filter)
         pp(result)
         
@@ -45,5 +45,5 @@ class fileVolumeIds():
             print(self.client.transport.print_reproduceable(call))
             
 if __name__ == "__main__":
-    main = fileVolumeIds()
+    main = blockVolumeIds()
     main.main()

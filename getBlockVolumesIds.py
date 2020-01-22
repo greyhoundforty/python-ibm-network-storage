@@ -1,6 +1,6 @@
 """
 @author Ryan TIffany
-Just return the IDs of the Block Volumes
+Return the Block Volume Ids and associated Billing Item Ids
 """
 
 from pprint import pprint as pp
@@ -9,7 +9,7 @@ import logging
 
 client = SoftLayer.create_client_from_env()
 
-object_mask = "mask[id]"
+object_mask = "mask[id,billingItem[id]]"
 object_filter = {
     'iscsiNetworkStorage': {
         'serviceResource': {
@@ -23,16 +23,16 @@ object_filter = {
             'keyName': {
                 'operation': '*= BLOCK_STORAGE'
                 }
+            },
+        'storageType': {
+            'keyName': {
+                'operation': '!~ BLOCK_STORAGE_REPLICANT'
+                }
             }
         }
     }
 
-second_mask = "mask[billingItem[id]]"
-
 result = client.call('SoftLayer_Account', 'getIscsiNetworkStorage'
                      ,mask=object_mask, filter=object_filter)
-for id in result:
-    file_ids = client.call('SoftLayer_Network_Storage', 'getObject', id=id, mask=second_mask)
-    print(file_ids)
-    # print(id)
-# print(result)
+
+pp(result)
