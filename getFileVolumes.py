@@ -5,11 +5,10 @@
 from pprint import pprint as pp
 import SoftLayer
 
+client = SoftLayer.create_client_from_env()
 
-CLIENT = SoftLayer.create_client_from_env()
-
-OBJECT_MASK = "mask[id, storageType[keyName]]"
-OBJECT_FILTER = {
+object_mask = "mask[id, storageType[keyName]]"
+object_filter = {
     'nasNetworkStorage': {
         'serviceResource': {
             'type': {
@@ -25,6 +24,6 @@ OBJECT_FILTER = {
             }
         }
     }
-RESULT = CLIENT.call('SoftLayer_Account', 'getNasNetworkStorage',
-                     mask=OBJECT_MASK, filter=OBJECT_FILTER)
-pp(RESULT)
+result = client.call('SoftLayer_Account', 'getNasNetworkStorage',
+                     mask=object_mask, filter=object_filter)
+pp(result)
