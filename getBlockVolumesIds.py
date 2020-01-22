@@ -31,5 +31,8 @@ second_mask = "mask[billingItem[id]]"
 
 result = client.call('SoftLayer_Account', 'getIscsiNetworkStorage'
                      ,mask=object_mask, filter=object_filter)
-
-pp(result)
+for id in result:
+    file_ids = client.call('SoftLayer_Network_Storage', 'getObject', id=id, mask=second_mask)
+    print(file_ids)
+    # print(id)
+# print(result)
