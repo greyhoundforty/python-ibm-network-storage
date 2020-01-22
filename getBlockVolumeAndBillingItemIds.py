@@ -1,6 +1,6 @@
 """
 @author Ryan Tiffany
-Using Classes for Block Volume Ids
+Using Classes to return Block Volume Ids and their associated Billing Item Ids
 """
 import SoftLayer
 from pprint import pprint as pp
